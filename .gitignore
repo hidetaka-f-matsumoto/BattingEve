@@ -1,0 +1,9 @@
+.svn
+Library
+Lib
+FingerGestures
+Temp
+*.pidb
+*.unityproj
+*.sln
+*.userprefs
