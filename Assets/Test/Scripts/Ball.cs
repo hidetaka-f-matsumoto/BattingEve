@@ -14,7 +14,8 @@ public class Ball : MoveObj {
 	public enum e_Stuff
 	{
 		NONE = 0,
-		SLOW,
+		BEGIN,
+		SLOW = BEGIN,
 		STRAIGHT,
 		SLIDER,
 		CURVE,
@@ -24,19 +25,36 @@ public class Ball : MoveObj {
 		
 		END
 	};
+	public struct ThrowParam
+	{
+		public e_Stuff	m_eStuff;
+		public int		m_iX;
+		public int		m_iY;
+		public void Init()
+		{
+			m_eStuff = Ball.e_Stuff.NONE;
+			m_iX = 0;
+			m_iY = 0;
+		}
+		public void Copy( ThrowParam _param )
+		{
+			m_eStuff = _param.m_eStuff;
+			m_iX = _param.m_iX;
+			m_iY = _param.m_iY;
+		}
+	};
 	public GameObject	m_Camera;
 	public GameObject	m_Batter;
 	public float		m_fPitchTime;
 	float				m_fPitchTimer;
 	e_Stat				m_eStat;
-	e_Stuff				m_eStuff;
+	ThrowParam			m_Throw;
 
 	protected override void Init()
 	{
 		base.Init();
 		m_fPitchTimer = m_fPitchTime;
-		m_eStat = e_Stat.NONE;
-		m_eStuff = e_Stuff.NONE;
+		//m_Throw.Init();
 		gameObject.rigidbody.useGravity = false;
 		gameObject.rigidbody.velocity = Vector3.zero;
 		gameObject.rigidbody.angularVelocity = Vector3.zero;
@@ -49,16 +67,12 @@ public class Ball : MoveObj {
 		case e_Stat.NONE:
 			m_fPitchTimer -= Time.deltaTime;
 			if( 0.0f > m_fPitchTimer ) {
-				if( e_Stuff.NONE == m_eStuff ) {
-					Throw( e_Stuff.SLOW );
-				} else {
-					Throw( m_eStuff );
-				}
+				Throw( m_Throw );
 				m_fPitchTimer = m_fPitchTime;
 			}
 			break;
 		case e_Stat.THROWING:
-			switch( m_eStuff ) {
+			switch( m_Throw.m_eStuff ) {
 			case e_Stuff.SLOW:
 				gameObject.rigidbody.velocity = new Vector3(0.0f,1.6f,-4.0f);
 				gameObject.rigidbody.useGravity = true;
@@ -92,6 +106,13 @@ public class Ball : MoveObj {
 		}
 	}
 	
+	void OnGUI()
+	{
+		GUILayout.BeginVertical("Ball");
+		GUILayout.Label( m_Throw.m_eStuff.ToString() );
+		GUILayout.EndVertical();
+	}
+
 	bool ShouldReturn()
 	{
 		if( 0.16f > rigidbody.velocity.magnitude
@@ -102,17 +123,23 @@ public class Ball : MoveObj {
 		return false;
 	}
 	
-	public void Throw( e_Stuff _eStuff )
+	public void Throw( ThrowParam _param )
 	{
 		if( e_Stat.NONE != m_eStat ) return;
-		if( e_Stuff.NONE == _eStuff ) _eStuff = e_Stuff.SLOW;
-		m_eStuff = _eStuff;
+//		if( e_Stuff.NONE == _param.m_eStuff ) _param.m_eStuff = e_Stuff.SLOW;
+		m_Throw.Copy( _param );
 		m_eStat = e_Stat.THROWING;
 	}
 	
-	public void SetStuff( e_Stuff _eStuff )
+	public void SetStuff( ThrowParam _param )
 	{
-		m_eStuff = _eStuff;
+		m_Throw = _param;
+	}
+
+	public void NextStuff()
+	{
+		m_Throw.m_eStuff++;
+		if( e_Stuff.END == m_Throw.m_eStuff ) m_Throw.m_eStuff = e_Stuff.BEGIN;
 	}
 
 	public void Return()

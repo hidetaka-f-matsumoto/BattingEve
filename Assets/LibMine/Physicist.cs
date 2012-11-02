@@ -79,19 +79,24 @@ public class Physicist : MonoBehaviour {
 		if( m_vWldVeloMax.magnitude < m_vWldVelo.magnitude ) {
 			m_vWldVeloMax = m_vWldVelo;
 		}
-		GUI.Label( new Rect(110,0,100,20), (100+m_iPhysAcc).ToString() );
-		GUI.Label( new Rect(10,20,100,20), m_vWldGrav.ToString() );
-		GUI.Label( new Rect(10,40,100,20), m_vWldIForce.ToString() );
-		GUI.Label( new Rect(110,40,100,20), m_vWldIForceMax.ToString() );
-		GUI.Label( new Rect(10,60,100,20), m_vWldVelo.ToString() );
-		GUI.Label( new Rect(110,60,100,20), m_vWldVeloMax.ToString() );
 
-		GUI.Label( new Rect(10,200,200,20), m_GyParams.m_vRotRate.ToString() );
-		GUI.Label( new Rect(10,220,200,20), m_GyParams.m_vRotRateUnbd.ToString() );
-		GUI.Label( new Rect(10,240,200,20), m_GyParams.m_vGrav.ToString() );
-		GUI.Label( new Rect(10,260,200,20), m_GyParams.m_qAttd.ToString() );
-		GUI.Label( new Rect(10,280,200,20), m_GyParams.m_vUsrAcc.ToString() );
-		GUI.Label( new Rect(10,300,200,20), m_vAccNow.ToString() );
+		GUILayout.BeginVertical("Physicist");
+
+		GUILayout.Label( (100+m_iPhysAcc).ToString() );
+		GUILayout.Label( m_vWldGrav.ToString() );
+		GUILayout.Label( m_vWldIForce.ToString() );
+		GUILayout.Label( m_vWldIForceMax.ToString() );
+		GUILayout.Label( m_vWldVelo.ToString() );
+		GUILayout.Label( m_vWldVeloMax.ToString() );
+
+		GUILayout.Label( m_GyParams.m_vRotRate.ToString() );
+		GUILayout.Label( m_GyParams.m_vRotRateUnbd.ToString() );
+		GUILayout.Label( m_GyParams.m_vGrav.ToString() );
+		GUILayout.Label( m_GyParams.m_qAttd.ToString() );
+		GUILayout.Label( m_GyParams.m_vUsrAcc.ToString() );
+		GUILayout.Label( m_vAccNow.ToString() );
+
+		GUILayout.EndVertical();
 	}
 	
 	void InputToPhysics()

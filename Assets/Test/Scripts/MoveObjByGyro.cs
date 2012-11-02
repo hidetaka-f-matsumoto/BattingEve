@@ -16,15 +16,6 @@ public class MoveObjByGyro : MonoBehaviour {
 	{
 	}
 	
-	protected virtual void OnGUI()
-	{
-		GUI.Label( new Rect(10,200,200,20), m_GyParams.m_vRotRate.ToString() );
-		GUI.Label( new Rect(10,220,200,20), m_GyParams.m_vRotRateUnbd.ToString() );
-		GUI.Label( new Rect(10,240,200,20), m_GyParams.m_vGrav.ToString() );
-		GUI.Label( new Rect(10,260,200,20), m_GyParams.m_qAttd.ToString() );
-		GUI.Label( new Rect(10,280,200,20), m_GyParams.m_vUsrAcc.ToString() );
-	}
-
 	protected virtual Vector3 ConvCoord_iPhone2Unity( Vector3 vSrc )
 	{
 		Vector3 vDst;

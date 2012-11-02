@@ -2,6 +2,14 @@ using UnityEngine;
 using System.Collections;
 
 public class Test : MonoBehaviour {
+	public enum e_GameMode {
+		NONE = 0,
+		BEGIN,
+		GYRO = BEGIN,
+		TAPPOS,
+		
+		END
+	};
 	public GameObject		m_Camera;
 	public GameObject		m_Cursor;
 	public GameObject		m_Ball;
@@ -9,45 +17,54 @@ public class Test : MonoBehaviour {
 	public GameObject		m_Batter;
 	public GameObject		m_BattHit;
 	float					m_fBallTimer;
-	int						m_iThrowType;
+	e_GameMode				m_eGameMode;
 
 	// Use this for initialization
 	void Start()
 	{
 		Physics.gravity = new Vector3(0.0f,-4.9f,0.0f);
 		m_fBallTimer = 0.0f;
-		m_iThrowType = 0;
+		m_eGameMode = e_GameMode.BEGIN;
 	}
 	
 	// Update is called once per frame
 	void Update()
 	{
 	}
+	
+	void SwitchGameMode()
+	{
+		m_eGameMode++;
+		if( m_eGameMode == e_GameMode.END ) m_eGameMode = e_GameMode.BEGIN;
+		switch( m_eGameMode ) {
+		case e_GameMode.GYRO:
+			m_Cursor.SendMessage( "OnOff", true );
+			break;
+		case e_GameMode.TAPPOS:
+			m_Cursor.SendMessage( "OnOff", false );
+			break;
+		default:
+			m_eGameMode = e_GameMode.GYRO;
+			m_Cursor.SendMessage( "OnOff", true );
+			break;
+		}
+	}
 
 	void OnGUI () {
+		GUILayout.BeginVertical("Main");
+		GUILayout.Label( m_eGameMode.ToString() );
+		GUILayout.EndVertical();
+
 		int sWidth = Screen.width;
 		GUI.Label(new Rect(sWidth - 100,0,50,50),"Time:" + m_fBallTimer);
 		if( GUI.Button(new Rect(sWidth - 200,0,100,100),"Init") ){
 			Application.LoadLevel(Application.loadedLevel);	
 		}
-		if( GUI.Button(new Rect(sWidth - 200,100,100,100),"Swing") ){
-			m_Batt.SendMessage( "Swing" );
-			m_Batter.SendMessage( "Swing" );
-			m_BattHit.SendMessage( "Swing" );
+		if( GUI.Button(new Rect(sWidth - 200,100,100,100),"SWMode") ){
+			SwitchGameMode();
 		}
-		if( GUI.Button(new Rect(sWidth - 200,300,100,100),"P Slo") ){
-			m_iThrowType = 0;
-			/*
-			m_Ball.SendMessage( "Throw", Ball.e_Stuff.SLOW );
-			m_Batter.SendMessage( "BackSwing" );
-			*/
-		}
-		if( GUI.Button(new Rect(sWidth - 200,200,100,100),"P Str") ){
-			m_iThrowType = 1;
-			/*
-			m_Ball.SendMessage( "Throw", Ball.e_Stuff.STRAIGHT );
-			m_Batter.SendMessage( "BackSwing" );
-			*/
+		if( GUI.Button(new Rect(sWidth - 200,200,100,100),"SChg") ){
+			m_Ball.SendMessage( "NextStuff" );
 		}
 		if( GUI.Button(new Rect(sWidth - 200,400,100,100),"Ret") ){
 			m_Ball.SendMessage( "Return" );
