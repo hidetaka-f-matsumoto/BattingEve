@@ -6,14 +6,13 @@ public class LookTracer : MoveObj {
 	bool					m_bTrace;
 
 	// Init Params	
-	protected override void Init()
+	void Init()
 	{
 		m_bTrace = false;
-		base.Init();
 	}
 	
 	// Update is called once per frame
-	protected override void Update()
+	void Update()
 	{
 		if( m_bTrace ) {
 			transform.LookAt( m_Ball.transform.position );

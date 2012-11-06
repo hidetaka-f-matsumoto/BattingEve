@@ -13,7 +13,6 @@ public class Test : MonoBehaviour {
 	public GameObject		m_Camera;
 	public GameObject		m_Cursor;
 	public GameObject		m_Ball;
-	public GameObject		m_Batt;
 	public GameObject		m_Batter;
 	public GameObject		m_BattHit;
 	float					m_fBallTimer;
@@ -38,14 +37,14 @@ public class Test : MonoBehaviour {
 		if( m_eGameMode == e_GameMode.END ) m_eGameMode = e_GameMode.BEGIN;
 		switch( m_eGameMode ) {
 		case e_GameMode.GYRO:
-			m_Cursor.SendMessage( "OnOff", true );
+			m_Cursor.SendMessage( "SetMode", GyroObj.e_Mode.ROTATION );
 			break;
 		case e_GameMode.TAPPOS:
-			m_Cursor.SendMessage( "OnOff", false );
+			m_Cursor.SendMessage( "SetMode", GyroObj.e_Mode.NONE );
 			break;
 		default:
 			m_eGameMode = e_GameMode.GYRO;
-			m_Cursor.SendMessage( "OnOff", true );
+			m_Cursor.SendMessage( "SetMode", GyroObj.e_Mode.NONE );
 			break;
 		}
 	}
@@ -124,7 +123,6 @@ public class Test : MonoBehaviour {
 
     void FingerGestures_OnFingerTap( int fingerIndex, Vector2 fingerPos )
     {
-		m_Batt.SendMessage( "Swing" );
 		m_Batter.SendMessage( "Swing" );
 		m_BattHit.SendMessage( "Swing" );
     }

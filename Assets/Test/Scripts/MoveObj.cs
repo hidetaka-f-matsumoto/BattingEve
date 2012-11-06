@@ -2,60 +2,72 @@ using UnityEngine;
 using System.Collections;
 
 public class MoveObj : MonoBehaviour {
-	protected Vector3			m_vPos, m_vFirstPos, m_vFirstPosL;
-	protected Quaternion		m_qRot, m_qFirstRot, m_qFirstRotL;
-	protected bool				m_bPos, m_bRot;
+	protected Vector3			m_vBasePos, m_vBasePosL;
+	protected Quaternion		m_qBaseRot, m_qBaseRotL;
 
 	// Use this for initialization
 	protected virtual void Start()
 	{
-		m_vFirstPos = transform.position;
-		m_qFirstRot = transform.rotation;
-		m_vFirstPosL = transform.localPosition;
-		m_qFirstRotL = transform.localRotation;
-		Init();
-	}
-	
-	// Init Params
-	protected virtual void Init()
-	{
-		m_vPos = m_vFirstPos;
-		m_qRot = m_qFirstRot;
-		m_bPos = m_bRot = false;
+		Store();
 	}
 
-	// Return to Fist
+	// Store 
+	protected virtual void Store()
+	{
+		Store_Pos();
+		Store_Rot();
+	}
+
+	// Store Position
+	protected virtual void Store_Pos()
+	{
+		m_vBasePos = transform.position;
+		m_vBasePosL = transform.localPosition;
+	}
+
+	// Store Rotation
+	protected virtual void Store_Rot()
+	{
+		m_qBaseRot = transform.rotation;
+		m_qBaseRotL = transform.localRotation;
+	}
+
+	// Restore
+	protected virtual void Restore()
+	{
+		Restore_Pos();
+		Restore_Rot();
+	}
+
+	// Restore Position
+	protected virtual void Restore_Pos()
+	{
+		transform.position = m_vBasePos;
+		transform.localPosition = m_vBasePosL;
+	}
+
+	// Restore Rotation
+	protected virtual void Restore_Rot()
+	{
+		transform.rotation = m_qBaseRot;
+		transform.localRotation = m_qBaseRotL;
+	}
+
+	// Return
 	protected virtual void Return()
 	{
-		Init();
-		transform.position = m_vFirstPos;
-		transform.rotation = m_qFirstRot;
-		transform.localPosition = m_vFirstPosL;
-		transform.localRotation = m_qFirstRotL;
-	}
-	
-	// Update is called once per frame
-	protected virtual void Update()
-	{
-		if( m_bPos ) {
-			transform.position = m_vPos;
-			m_bPos = false;
-		}
-		if( m_bRot ) {
-			transform.rotation = m_qRot;
-			m_bRot = false;
-		}
+		Restore();
 	}
 
-	public virtual void Move( Vector3 _vPos )
+	// Set Position Directly.
+	public virtual void SetPos( Vector3 _vPos )
 	{
-		m_vPos = _vPos;
-		m_bPos = true;
+		transform.position = _vPos;
 	}
 
-	public virtual void Rotate( Quaternion _qRot )
+	// Set Rotation Directly.
+	public virtual void SetRot( Quaternion _qRot )
 	{
-		m_qRot = _qRot;
-		m_bRot = true;
+		transform.rotation = _qRot;
 	}
 }

@@ -50,9 +50,8 @@ public class Ball : MoveObj {
 	e_Stat				m_eStat;
 	ThrowParam			m_Throw;
 
-	protected override void Init()
+	public void Init()
 	{
-		base.Init();
 		m_fPitchTimer = m_fPitchTime;
 		//m_Throw.Init();
 		gameObject.rigidbody.useGravity = false;
@@ -61,7 +60,7 @@ public class Ball : MoveObj {
 	}
 	
 	// Update is called once per frame
-	protected override void Update()
+	private void Update()
 	{
 		switch( m_eStat ) {
 		case e_Stat.NONE:
