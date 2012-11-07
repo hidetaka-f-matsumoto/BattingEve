@@ -1,8 +1,18 @@
 using UnityEngine;
 using System.Collections;
 
-public class Test : MonoBehaviour {
-	public enum e_GameMode {
+public enum e_DebugDisp
+{
+	START = 0,
+	MAIN,
+	PHYS,
+	BALL,
+};
+
+public class Test : MonoBehaviour
+{
+	public enum e_GameMode
+	{
 		NONE = 0,
 		BEGIN,
 		GYRO = BEGIN,
@@ -10,32 +20,49 @@ public class Test : MonoBehaviour {
 		
 		END
 	};
+	public struct t_GameMode
+	{
+		public bool			m_bChg;
+		public e_GameMode	m_eMode;
+		public void Init()
+		{
+			m_bChg = true;
+			m_eMode = e_GameMode.BEGIN;
+		}
+		public void Next()
+		{
+			m_bChg = true;
+			m_eMode++;
+			if( m_eMode == e_GameMode.END ) m_eMode = e_GameMode.BEGIN;
+		}
+	};
+	public GameObject		m_Gyro;
 	public GameObject		m_Camera;
 	public GameObject		m_Cursor;
 	public GameObject		m_Ball;
 	public GameObject		m_Batter;
 	public GameObject		m_BattHit;
 	float					m_fBallTimer;
-	e_GameMode				m_eGameMode;
+	t_GameMode				m_tGameMode;
 
 	// Use this for initialization
 	void Start()
 	{
 		Physics.gravity = new Vector3(0.0f,-4.9f,0.0f);
 		m_fBallTimer = 0.0f;
-		m_eGameMode = e_GameMode.BEGIN;
+		m_tGameMode.Init();
 	}
 	
 	// Update is called once per frame
 	void Update()
 	{
+		UpdateGameMode();
 	}
 	
-	void SwitchGameMode()
+	void UpdateGameMode()
 	{
-		m_eGameMode++;
-		if( m_eGameMode == e_GameMode.END ) m_eGameMode = e_GameMode.BEGIN;
-		switch( m_eGameMode ) {
+		if( !m_tGameMode.m_bChg ) return;
+		switch( m_tGameMode.m_eMode ) {
 		case e_GameMode.GYRO:
 			m_Cursor.SendMessage( "SetMode", GyroObj.e_Mode.ROTATION );
 			break;
@@ -43,16 +70,18 @@ public class Test : MonoBehaviour {
 			m_Cursor.SendMessage( "SetMode", GyroObj.e_Mode.NONE );
 			break;
 		default:
-			m_eGameMode = e_GameMode.GYRO;
+			m_tGameMode.m_eMode = e_GameMode.GYRO;
 			m_Cursor.SendMessage( "SetMode", GyroObj.e_Mode.NONE );
 			break;
 		}
 	}
 
 	void OnGUI () {
-		GUILayout.BeginVertical("Main");
-		GUILayout.Label( m_eGameMode.ToString() );
+		/*
+		GUILayout.BeginVertical("box");
+		GUILayout.Label( m_tGameMode.m_eMode.ToString() );
 		GUILayout.EndVertical();
+		*/
 
 		int sWidth = Screen.width;
 		GUI.Label(new Rect(sWidth - 100,0,50,50),"Time:" + m_fBallTimer);
@@ -60,7 +89,7 @@ public class Test : MonoBehaviour {
 			Application.LoadLevel(Application.loadedLevel);	
 		}
 		if( GUI.Button(new Rect(sWidth - 200,100,100,100),"SWMode") ){
-			SwitchGameMode();
+			m_tGameMode.Next();
 		}
 		if( GUI.Button(new Rect(sWidth - 200,200,100,100),"SChg") ){
 			m_Ball.SendMessage( "NextStuff" );
@@ -72,35 +101,35 @@ public class Test : MonoBehaviour {
 		if( GUI.Button(new Rect(sWidth - 100,0,100,100),"RotX+") ){
 			ParamGyro gyParam = new ParamGyro();
 			gyParam.m_vRotRate = new Vector3(1.0f,0.0f,0.0f);
-			m_Cursor.SendMessage( "Gyro", gyParam );
+			m_Gyro.SendMessage( "GyroTest", gyParam );
 		}
 		if( GUI.Button(new Rect(sWidth - 100,100,100,100),"RotX-") ){
 			ParamGyro gyParam = new ParamGyro();
 			gyParam.m_vRotRate = new Vector3(-1.0f,0.0f,0.0f);
-			m_Cursor.SendMessage( "Gyro", gyParam );
+			m_Gyro.SendMessage( "GyroTest", gyParam );
 		}
 		if( GUI.Button(new Rect(sWidth - 100,200,100,100),"RotY+") ){
 			ParamGyro gyParam = new ParamGyro();
 			gyParam.m_vRotRate = new Vector3(0.0f,1.0f,0.0f);
-			m_Cursor.SendMessage( "Gyro", gyParam );
+			m_Gyro.SendMessage( "GyroTest", gyParam );
 		}
 		if( GUI.Button(new Rect(sWidth - 100,300,100,100),"RotY-") ){
 			ParamGyro gyParam = new ParamGyro();
 			gyParam.m_vRotRate = new Vector3(0.0f,-1.0f,0.0f);
-			m_Cursor.SendMessage( "Gyro", gyParam );
+			m_Gyro.SendMessage( "GyroTest", gyParam );
 		}
 		if( GUI.Button(new Rect(sWidth - 100,400,100,100),"RotZ+") ){
 			ParamGyro gyParam = new ParamGyro();
 			gyParam.m_vRotRate = new Vector3(0.0f,0.0f,1.0f);
-			m_Cursor.SendMessage( "Gyro", gyParam );
+			m_Gyro.SendMessage( "GyroTest", gyParam );
 		}
 		if( GUI.Button(new Rect(sWidth - 100,500,100,100),"RotZ-") ){
 			ParamGyro gyParam = new ParamGyro();
 			gyParam.m_vRotRate = new Vector3(0.0f,0.0f,-1.0f);
-			m_Cursor.SendMessage( "Gyro", gyParam );
+			m_Gyro.SendMessage( "GyroTest", gyParam );
 		}
 	}
-
+	/*
     #region Gesture event registration/unregistration
 
     void OnEnable()
@@ -128,4 +157,5 @@ public class Test : MonoBehaviour {
     }
 
     #endregion
+    */
 }

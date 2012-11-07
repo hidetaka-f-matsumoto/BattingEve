@@ -107,7 +107,7 @@ public class Ball : MoveObj {
 	
 	void OnGUI()
 	{
-		GUILayout.BeginVertical("Ball");
+		GUILayout.BeginVertical("box");
 		GUILayout.Label( m_Throw.m_eStuff.ToString() );
 		GUILayout.EndVertical();
 	}

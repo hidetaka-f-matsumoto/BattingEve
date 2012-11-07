@@ -16,4 +16,14 @@ public class ParamGyro {
 		m_vUsrAcc		= _gyro.userAcceleration;
 		m_qAttd			= _gyro.attitude;
 	}
+
+	public string ToString()
+	{
+		return	"ParamGyro¥n" +
+				"RotRate: " + m_vRotRate.ToString() + "¥n" +
+				"RotRateUnbd: " + m_vRotRateUnbd.ToString() + "¥n" +
+				"Grav: " + m_vGrav.ToString() + "¥n" +
+				"UsrAcc: " + m_vUsrAcc.ToString() + "¥n" +
+				"Attd: " + m_qAttd.ToString();
+	}
 }

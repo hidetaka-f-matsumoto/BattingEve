@@ -79,8 +79,8 @@ public class Physicist : MonoBehaviour {
 		if( m_vWldVeloMax.magnitude < m_vWldVelo.magnitude ) {
 			m_vWldVeloMax = m_vWldVelo;
 		}
-
-		GUILayout.BeginVertical("Physicist");
+		/*
+		GUILayout.BeginVertical("box");
 
 		GUILayout.Label( (100+m_iPhysAcc).ToString() );
 		GUILayout.Label( m_vWldGrav.ToString() );
@@ -97,6 +97,7 @@ public class Physicist : MonoBehaviour {
 		GUILayout.Label( m_vAccNow.ToString() );
 
 		GUILayout.EndVertical();
+		*/
 	}
 	
 	void InputToPhysics()
