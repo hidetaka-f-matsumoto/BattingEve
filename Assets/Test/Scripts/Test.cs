@@ -36,6 +36,8 @@ public class Test : MonoBehaviour
 			if( m_eMode == e_GameMode.END ) m_eMode = e_GameMode.BEGIN;
 		}
 	};
+	public GameObject		m_ComInfo;
+	CommonInfo				m_ComInfoScript;
 	public GameObject		m_Gyro;
 	public GameObject		m_Camera;
 	public GameObject		m_Cursor;
@@ -48,6 +50,7 @@ public class Test : MonoBehaviour
 	// Use this for initialization
 	void Start()
 	{
+		m_ComInfoScript = m_ComInfo.GetComponent<CommonInfo>();
 		Physics.gravity = new Vector3(0.0f,-4.9f,0.0f);
 		m_fBallTimer = 0.0f;
 		m_tGameMode.Init();
@@ -64,14 +67,17 @@ public class Test : MonoBehaviour
 		if( !m_tGameMode.m_bChg ) return;
 		switch( m_tGameMode.m_eMode ) {
 		case e_GameMode.GYRO:
-			m_Cursor.SendMessage( "SetMode", GyroObj.e_Mode.ROTATION );
+			m_Cursor.SendMessage( "SetGyroMode", GyroObj.e_Mode.ROTATION );
+			m_Cursor.SendMessage( "SetTouchMode", TouchObj.e_Mode.NONE );
 			break;
 		case e_GameMode.TAPPOS:
-			m_Cursor.SendMessage( "SetMode", GyroObj.e_Mode.NONE );
+			m_Cursor.SendMessage( "SetGyroMode", GyroObj.e_Mode.NONE );
+			m_Cursor.SendMessage( "SetTouchMode", TouchObj.e_Mode.TAP );
 			break;
 		default:
 			m_tGameMode.m_eMode = e_GameMode.GYRO;
-			m_Cursor.SendMessage( "SetMode", GyroObj.e_Mode.NONE );
+			m_Cursor.SendMessage( "SetGyroMode", GyroObj.e_Mode.NONE );
+			m_Cursor.SendMessage( "SetTouchMode", TouchObj.e_Mode.NONE );
 			break;
 		}
 	}

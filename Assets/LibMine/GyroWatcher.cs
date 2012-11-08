@@ -24,13 +24,6 @@ public class GyroWatcher : MonoBehaviour {
 		m_GyParams.Set( Input.gyro );
 	}
 	
-	void OnGUI()
-	{
-		GUILayout.BeginVertical("box");
-		GUILayout.Label(m_GyParams.ToString());
-		GUILayout.EndVertical();
-	}
-	
 	// Test
 	public virtual void GyroTest( ParamGyro _params )
 	{

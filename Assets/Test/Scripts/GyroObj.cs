@@ -24,8 +24,6 @@ public class GyroObj : MonoBehaviour
 	// Update is called once per frame
 	protected virtual void Update()
 	{
-		Debug.Log(m_GyScript.m_GyParams.m_vRotRate.ToString());
-
 		if( e_Mode.NONE != (e_Mode.ACCELERATION & m_eMode) )
 		{
 			gameObject.rigidbody.transform.position += 0.02f * ConvCoord_iPhone2Unity( m_GyScript.m_GyParams.m_vRotRate );
@@ -54,7 +52,7 @@ public class GyroObj : MonoBehaviour
 		return vDst;
 	}
 
-	public virtual void SetMode( e_Mode _eMode )
+	public virtual void SetGyroMode( e_Mode _eMode )
 	{
 		m_eMode = _eMode;
 	}

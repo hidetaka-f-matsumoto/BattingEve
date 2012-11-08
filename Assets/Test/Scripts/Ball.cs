@@ -43,12 +43,20 @@ public class Ball : MoveObj {
 			m_iY = _param.m_iY;
 		}
 	};
-	public GameObject	m_Camera;
-	public GameObject	m_Batter;
-	public float		m_fPitchTime;
-	float				m_fPitchTimer;
-	e_Stat				m_eStat;
-	ThrowParam			m_Throw;
+	public GameObject		m_ComInfo;
+	CommonInfo				m_ComInfoScript;
+	public GameObject		m_Camera;
+	public GameObject		m_Batter;
+	public float			m_fPitchTime;
+	float					m_fPitchTimer;
+	e_Stat					m_eStat;
+	ThrowParam				m_Throw;
+	
+	protected override void Start()
+	{
+		m_ComInfoScript = m_ComInfo.GetComponent<CommonInfo>();
+		base.Start();
+	}
 
 	public void Init()
 	{
@@ -77,8 +85,6 @@ public class Ball : MoveObj {
 				gameObject.rigidbody.useGravity = true;
 				Physics.gravity = new Vector3(0.0f,-3.0f,0.0f);
 				m_eStat = e_Stat.THROWED;
-				
-				m_Batter.SendMessage( "BackSwing" );
 				break;
 			case e_Stuff.STRAIGHT:
 				gameObject.rigidbody.velocity = new Vector3(0.0f,0.0f,-8.0f);
@@ -89,6 +95,7 @@ public class Ball : MoveObj {
 			default:
 				break;
 			}
+			m_ComInfoScript.m_eGameSeq = e_GameSeq.PITCHER_THROW;
 			break;
 		case e_Stat.THROWED:
 			if( ShouldReturn() ) {

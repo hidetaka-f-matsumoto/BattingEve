@@ -3,6 +3,7 @@ using System.Collections;
 
 public class FPSWatcher : MonoBehaviour
 {
+	[SerializeField]
 	float				m_fFps;
 
 	// Use this for initialization
@@ -18,14 +19,5 @@ public class FPSWatcher : MonoBehaviour
 		{
 			m_fFps = 1.0f / Time.deltaTime;
 		}
-	}
-	
-	void OnGUI ()
-	{
-		/*
-		GUILayout.BeginVertical("box");
-		GUILayout.Label( "FPS =" + m_fFps );
-		GUILayout.EndVertical();
-		*/
 	}
 }
