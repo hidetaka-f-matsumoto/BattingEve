@@ -24,7 +24,7 @@ public class TouchObj : MonoBehaviour {
 	};
 
 	protected e_Mode		m_eMode;
-	protected t_Touch		m_Tap;
+	protected t_Touch		m_Touch;
 
 	protected virtual void Start()
 	{
@@ -34,18 +34,26 @@ public class TouchObj : MonoBehaviour {
 	protected virtual void Init()
 	{
 		m_eMode = e_Mode.NONE;
-		m_Tap.Init();
+		m_Touch.Init();
 	}
 
 	protected virtual void Update()
 	{
-		if( e_Mode.NONE != (e_Mode.TAP & m_eMode) && m_Tap.m_bTouch )
+		if( e_Mode.NONE != (e_Mode.TAP & m_eMode) && m_Touch.m_bTouch )
 		{
-			gameObject.transform.position = ConvScreenPos2ObjPos( m_Tap.m_vParam1 );
-			m_Tap.m_bTouch = false;
+			OnTap();
 		}
+		m_Touch.Init();
 	}
-
+	
+	protected virtual void OnTap()
+	{
+	}
+	
+	protected virtual void OnDoubleTap()
+	{
+	}
+	
 	// Convert touch position to object position in the World.
 	protected virtual Vector3 ConvScreenPos2ObjPos( Vector2 _vSrc )
 	{
@@ -67,8 +75,8 @@ public class TouchObj : MonoBehaviour {
 
     void FingerGestures_OnFingerTap( int fingerIndex, Vector2 fingerPos )
     {
-		m_Tap.m_bTouch = true;
-		m_Tap.m_vParam1 = fingerPos;
+		m_Touch.m_bTouch = true;
+		m_Touch.m_vParam1 = fingerPos;
     }
 	
 	public void SetTouchMode( e_Mode _eMode )

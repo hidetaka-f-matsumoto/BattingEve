@@ -26,6 +26,11 @@ public class Test : MonoBehaviour
 		public e_GameMode	m_eMode;
 		public void Init()
 		{
+			m_bChg = false;
+			m_eMode = e_GameMode.NONE;
+		}
+		public void Start()
+		{
 			m_bChg = true;
 			m_eMode = e_GameMode.BEGIN;
 		}
@@ -53,7 +58,7 @@ public class Test : MonoBehaviour
 		m_ComInfoScript = m_ComInfo.GetComponent<CommonInfo>();
 		Physics.gravity = new Vector3(0.0f,-4.9f,0.0f);
 		m_fBallTimer = 0.0f;
-		m_tGameMode.Init();
+		m_tGameMode.Start();
 	}
 	
 	// Update is called once per frame
@@ -80,15 +85,10 @@ public class Test : MonoBehaviour
 			m_Cursor.SendMessage( "SetTouchMode", TouchObj.e_Mode.NONE );
 			break;
 		}
+		m_tGameMode.m_bChg = false;
 	}
 
 	void OnGUI () {
-		/*
-		GUILayout.BeginVertical("box");
-		GUILayout.Label( m_tGameMode.m_eMode.ToString() );
-		GUILayout.EndVertical();
-		*/
-
 		int sWidth = Screen.width;
 		GUI.Label(new Rect(sWidth - 100,0,50,50),"Time:" + m_fBallTimer);
 		if( GUI.Button(new Rect(sWidth - 200,0,100,100),"Init") ){

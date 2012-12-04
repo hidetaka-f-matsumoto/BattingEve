@@ -54,10 +54,14 @@ public class Ball : MoveObj {
 	
 	protected override void Start()
 	{
-		m_ComInfoScript = m_ComInfo.GetComponent<CommonInfo>();
 		base.Start();
 	}
-
+	
+	void OnEnable()
+	{
+		m_ComInfoScript = m_ComInfo.GetComponent<CommonInfo>();
+	}
+	
 	public void Init()
 	{
 		m_fPitchTimer = m_fPitchTime;

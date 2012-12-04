@@ -11,27 +11,40 @@ public class GyroObj : MonoBehaviour
 	};
 	
 	public GameObject		m_GyWatcher;
-	GyroWatcher				m_GyScript;
-	e_Mode					m_eMode;
+	protected GyroWatcher	m_GyScript;
+	protected e_Mode		m_eMode;
 
 	// Use this for initialization
 	protected virtual void Start()
 	{
 		m_eMode = e_Mode.NONE;
-		m_GyScript = m_GyWatcher.GetComponent<GyroWatcher>();
 	}
 	
+	// OnEnable is called when the object becomes enabled and active
+	protected virtual void OnEnable()
+	{
+		m_GyScript = m_GyWatcher.GetComponent<GyroWatcher>();
+	}
+
 	// Update is called once per frame
 	protected virtual void Update()
 	{
 		if( e_Mode.NONE != (e_Mode.ACCELERATION & m_eMode) )
 		{
-			gameObject.rigidbody.transform.position += 0.02f * ConvCoord_iPhone2Unity( m_GyScript.m_GyParams.m_vRotRate );
+			OnAcceleration();
 		}
 		if( e_Mode.NONE != (e_Mode.ROTATION & m_eMode) )
 		{
-			gameObject.rigidbody.transform.position += 0.02f * ConvCoord_iPhone2Unity_Rot( m_GyScript.m_GyParams.m_vRotRate );
+			OnRotation();
 		}
+	}
+	
+	protected virtual void OnAcceleration()
+	{
+	}
+	
+	protected virtual void OnRotation()
+	{
 	}
 	
 	protected virtual Vector3 ConvCoord_iPhone2Unity( Vector3 vSrc )
