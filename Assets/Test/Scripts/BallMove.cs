@@ -66,6 +66,7 @@ public class BallMove : MoveObj
 	public void Init()
 	{
 		m_fPitchTimer = m_fPitchTime;
+		m_eStat = e_Stat.NONE;
 	 	m_Throw.Init();
 		gameObject.rigidbody.useGravity = false;
 		gameObject.rigidbody.velocity = Vector3.zero;
