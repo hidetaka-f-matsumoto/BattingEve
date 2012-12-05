@@ -1,7 +1,8 @@
 using UnityEngine;
 using System.Collections;
 
-public class Ball : MoveObj {
+public class BallMove : MoveObj
+{
 	public enum e_Stat
 	{
 		NONE = 0,
@@ -32,7 +33,7 @@ public class Ball : MoveObj {
 		public int		m_iY;
 		public void Init()
 		{
-			m_eStuff = Ball.e_Stuff.NONE;
+			m_eStuff = BallMove.e_Stuff.NONE;
 			m_iX = 0;
 			m_iY = 0;
 		}
@@ -65,7 +66,7 @@ public class Ball : MoveObj {
 	public void Init()
 	{
 		m_fPitchTimer = m_fPitchTime;
-		//m_Throw.Init();
+	 	m_Throw.Init();
 		gameObject.rigidbody.useGravity = false;
 		gameObject.rigidbody.velocity = Vector3.zero;
 		gameObject.rigidbody.angularVelocity = Vector3.zero;
@@ -84,6 +85,7 @@ public class Ball : MoveObj {
 			break;
 		case e_Stat.THROWING:
 			switch( m_Throw.m_eStuff ) {
+			case e_Stuff.NONE:
 			case e_Stuff.SLOW:
 				gameObject.rigidbody.velocity = new Vector3(0.0f,1.6f,-4.0f);
 				gameObject.rigidbody.useGravity = true;
@@ -136,7 +138,6 @@ public class Ball : MoveObj {
 	public void Throw( ThrowParam _param )
 	{
 		if( e_Stat.NONE != m_eStat ) return;
-//		if( e_Stuff.NONE == _param.m_eStuff ) _param.m_eStuff = e_Stuff.SLOW;
 		m_Throw.Copy( _param );
 		m_eStat = e_Stat.THROWING;
 	}
@@ -155,6 +156,7 @@ public class Ball : MoveObj {
 	public void Return()
 	{
 		m_Camera.SendMessage( "Return" );
+		Init();
 		base.Return();
 	}
 	
