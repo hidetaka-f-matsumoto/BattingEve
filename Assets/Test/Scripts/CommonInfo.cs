@@ -17,7 +17,8 @@ public enum e_GameSeq
 	END
 };
 
-public class CommonInfo : MonoBehaviour {
+public class CommonInfo : MonoBehaviour
+{
 	public e_GameSeq		m_eGameSeq;
 
 	// Use this for initialization

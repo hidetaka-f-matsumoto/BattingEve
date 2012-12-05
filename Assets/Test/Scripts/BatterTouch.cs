@@ -18,7 +18,6 @@ public class BatterTouch : TouchObj
 	public float			m_fSwingTime;
 	float					m_fSwingTimer;
 	e_Stat					m_eStat;
-	bool					m_bSwitchAnim;
 
 	protected override void Start()
 	{
@@ -31,8 +30,7 @@ public class BatterTouch : TouchObj
 	{
 		base.Init();
 		m_fSwingTimer = m_fSwingTime;
-		m_eStat = e_Stat.STAND;
-		m_bSwitchAnim = true;
+		Stand();
 	}
 	
 	void OnEnable()
@@ -44,6 +42,10 @@ public class BatterTouch : TouchObj
 	{
 		// Change status by situation.
 		switch( m_ComInfoScript.m_eGameSeq ) {
+		case e_GameSeq.PLAYBALL:
+		case e_GameSeq.PITCHER_SET:
+			Stand();
+			break;
 		case e_GameSeq.PITCHER_THROW:
 			BackSwing();
 			break;
@@ -59,8 +61,6 @@ public class BatterTouch : TouchObj
 		default:
 			break;
 		}
-		
-		SwitchAnim();
 	}
 	
 	protected override void OnTap ()
@@ -68,25 +68,10 @@ public class BatterTouch : TouchObj
 		Swing();
 	}
 
-	// Switch Animation by state
-	void SwitchAnim()
+	public void Stand()
 	{
-		if( m_bSwitchAnim ) {
-			switch( m_eStat ) {
-			case e_Stat.STAND:
-				m_MyAnim.CrossFade( "Stand" );
-				break;
-			case e_Stat.BACKSWING:
-				m_MyAnim.CrossFade( "BackSwing" );
-				break;
-			case e_Stat.SWING:
-				m_MyAnim.CrossFade( "Swing" );
-				break;
-			default:
-				break;
-			}
-			m_bSwitchAnim = false;
-		}
+		m_eStat = e_Stat.STAND;
+		m_MyAnim.CrossFade( "Stand" );
 	}
 	
 	public void Swing()
@@ -95,7 +80,7 @@ public class BatterTouch : TouchObj
 		case e_Stat.STAND:
 		case e_Stat.BACKSWING:
 			m_eStat = e_Stat.SWING;
-			m_bSwitchAnim = true;
+			m_MyAnim.CrossFade( "Swing" );
 			break;
 		default:
 			break;
@@ -107,7 +92,7 @@ public class BatterTouch : TouchObj
 		switch( m_eStat ) {
 		case e_Stat.STAND:
 			m_eStat = e_Stat.BACKSWING;
-			m_bSwitchAnim = true;
+			m_MyAnim.CrossFade( "BackSwing" );
 			break;
 		default:
 			break;
