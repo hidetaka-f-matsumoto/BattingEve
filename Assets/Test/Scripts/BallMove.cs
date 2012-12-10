@@ -107,11 +107,13 @@ public class BallMove : MoveObj
 		case e_Stat.THROWED:
 			if( ShouldReturn() ) {
 				Return();
+				m_ComInfoScript.m_eGameSeq = e_GameSeq.BEGIN;
 			}
 			break;
 		case e_Stat.HITTED:
 			if( ShouldReturn() ) {
 				Return();
+				m_ComInfoScript.m_eGameSeq = e_GameSeq.BEGIN;
 			}
 			break;
 		default:

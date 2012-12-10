@@ -10,15 +10,24 @@ public class TouchObj : MonoBehaviour {
 		SWAP			= 0x00000004,
 		DRAG			= 0x00000008,
 	};
+	public enum e_TouchPhase
+	{
+		NONE = 0,
+		DETECT,
+		HANDLE,
+
+		END
+	};
 	public struct t_Touch
 	{
-		public bool			m_bTouch;
+		public e_TouchPhase	m_ePhase;
 		public Vector2		m_vParam1;
 		public Vector2		m_vParam2;
 		public void Init()
 		{
-			m_bTouch = false;
-			m_vParam1.Set(0.0f,0.0f);
+			Debug.Log("aho");
+			m_ePhase = e_TouchPhase.NONE;
+			m_vParam1.Set(0.0f,7.0f);
 			m_vParam2.Set(0.0f,0.0f);
 		}
 	};
@@ -31,27 +40,28 @@ public class TouchObj : MonoBehaviour {
 		Init();
 	}
 
-	protected virtual void Init()
+	protected virtual void Init( bool _bMode = true )
 	{
-		m_eMode = e_Mode.NONE;
+		if( _bMode ) m_eMode = e_Mode.NONE;
 		m_Touch.Init();
 	}
 
 	protected virtual void Update()
 	{
-		if( e_Mode.NONE != (e_Mode.TAP & m_eMode) && m_Touch.m_bTouch )
-		{
-			OnTap();
-		}
-		m_Touch.Init();
+		if( e_Mode.NONE != (e_Mode.TAP & m_eMode) &&
+			e_TouchPhase.DETECT == m_Touch.m_ePhase ) OnTap();
+		
+		if( e_TouchPhase.HANDLE == m_Touch.m_ePhase ) m_Touch.Init();
 	}
 	
 	protected virtual void OnTap()
 	{
+		m_Touch.m_ePhase = e_TouchPhase.HANDLE;
 	}
 	
 	protected virtual void OnDoubleTap()
 	{
+		m_Touch.m_ePhase = e_TouchPhase.HANDLE;
 	}
 	
 	// Convert touch position to object position in the World.
@@ -75,7 +85,7 @@ public class TouchObj : MonoBehaviour {
 
     void FingerGestures_OnFingerTap( int fingerIndex, Vector2 fingerPos )
     {
-		m_Touch.m_bTouch = true;
+		m_Touch.m_ePhase = e_TouchPhase.DETECT;
 		m_Touch.m_vParam1 = fingerPos;
     }
 	

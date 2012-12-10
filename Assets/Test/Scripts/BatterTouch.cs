@@ -21,14 +21,14 @@ public class BatterTouch : TouchObj
 
 	protected override void Start()
 	{
-		Init();
+		Init( true );
 		AddTouchMode( TouchObj.e_Mode.TAP );
 		AddTouchMode( TouchObj.e_Mode.DTAP );
 	}
 	
-	protected override void Init()
+	protected override void Init( bool _bMode )
 	{
-		base.Init();
+		base.Init( _bMode );
 		m_fSwingTimer = m_fSwingTime;
 		Stand();
 	}
@@ -40,6 +40,8 @@ public class BatterTouch : TouchObj
 
 	protected override void Update()
 	{
+		base.Update();
+
 		// Change status by situation.
 		switch( m_ComInfoScript.m_eGameSeq ) {
 		case e_GameSeq.PLAYBALL:
@@ -56,16 +58,17 @@ public class BatterTouch : TouchObj
 		switch( m_eStat ) {
 		case e_Stat.SWING:
 			m_fSwingTimer -= Time.deltaTime;
-			if( 0.0f > m_fSwingTimer ) { Init(); }
+			if( 0.0f > m_fSwingTimer ) { Init( false ); }
 			break;
 		default:
 			break;
 		}
 	}
 	
-	protected override void OnTap ()
+	protected override void OnTap()
 	{
 		Swing();
+		m_Touch.m_ePhase = e_TouchPhase.HANDLE;
 	}
 
 	public void Stand()
