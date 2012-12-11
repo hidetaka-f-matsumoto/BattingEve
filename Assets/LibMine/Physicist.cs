@@ -1,7 +1,8 @@
 using UnityEngine;
 using System.Collections;
 
-public class Physicist : MonoBehaviour {
+public class Physicist : BaseObj
+{
 	public GameObject	m_PhysObj;
 
 	bool				m_bPhysAcc;

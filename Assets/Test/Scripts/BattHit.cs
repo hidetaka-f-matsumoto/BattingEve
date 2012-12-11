@@ -1,7 +1,8 @@
 using UnityEngine;
 using System.Collections;
 
-public class BattHit : MonoBehaviour {
+public class BattHit : BaseObj
+{
 	public float		m_fForceMax;
 	public float		m_fJustTiming;
 	float				m_fHitTimer;

@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class GyroObj : MonoBehaviour
+public class GyroObj : BaseObj
 {
 	public enum e_Mode
 	{

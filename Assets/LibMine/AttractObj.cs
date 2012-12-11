@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class AttractObj : MonoBehaviour {
+public class AttractObj : BaseObj {
 	public GameObject		m_AttractObj;
 	Vector3					m_vAttractF;
 

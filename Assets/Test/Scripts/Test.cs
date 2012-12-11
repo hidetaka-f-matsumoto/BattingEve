@@ -9,7 +9,7 @@ public enum e_DebugDisp
 	BALL,
 };
 
-public class Test : MonoBehaviour
+public class Test : BaseObj
 {
 	public enum e_GameMode
 	{
@@ -134,6 +134,10 @@ public class Test : MonoBehaviour
 			gyParam.m_vRotRate = new Vector3(0.0f,0.0f,-1.0f);
 			m_Gyro.SendMessage( "GyroTest", gyParam );
 		}
+	}
+    void FingerGestures_OnFingerTap( int fingerIndex, Vector2 fingerPos )
+	{
+		Debug.Log("aaaaaaaaaaaaaaaa");
 	}
 	/*
     #region Gesture event registration/unregistration

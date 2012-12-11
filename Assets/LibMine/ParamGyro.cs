@@ -1,7 +1,8 @@
 using UnityEngine;
 using System.Collections;
 
-public class ParamGyro {
+public class ParamGyro
+{
 	public Vector3			m_vRotRate = new Vector3();
 	public Vector3			m_vRotRateUnbd = new Vector3();
 	public Vector3			m_vGrav = new Vector3();

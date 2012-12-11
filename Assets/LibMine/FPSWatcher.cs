@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class FPSWatcher : MonoBehaviour
+public class FPSWatcher : BaseObj
 {
 	[SerializeField]
 	float				m_fFps;

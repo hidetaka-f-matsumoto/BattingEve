@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class MoveObj : MonoBehaviour
+public class MoveObj : BaseObj
 {
 	protected Vector3			m_vBasePos, m_vBasePosL;
 	protected Quaternion		m_qBaseRot, m_qBaseRotL;

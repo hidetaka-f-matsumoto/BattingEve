@@ -1,7 +1,8 @@
 using UnityEngine;
 using System.Collections;
 
-public class GyroWatcher : MonoBehaviour {
+public class GyroWatcher : BaseObj
+{
 	public ParamGyro		m_GyParams;
 	bool					m_bTest;
 

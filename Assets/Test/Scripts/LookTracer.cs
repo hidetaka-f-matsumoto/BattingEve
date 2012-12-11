@@ -1,7 +1,8 @@
 using UnityEngine;
 using System.Collections;
 
-public class LookTracer : MoveObj {
+public class LookTracer : MoveObj
+{
 	public GameObject		m_Ball;
 	bool					m_bTrace;
 
