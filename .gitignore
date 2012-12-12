@@ -5,5 +5,7 @@ FingerGestures
 Temp
 *.pidb
 *.unityproj
+*.csproj
 *.sln
 *.userprefs
+*.DS_Store
