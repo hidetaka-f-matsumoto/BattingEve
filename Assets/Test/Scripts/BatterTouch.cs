@@ -22,8 +22,8 @@ public class BatterTouch : TouchObj
 	protected override void Start()
 	{
 		Init( true );
-		AddTouchMode( TouchObj.e_Mode.TAP );
-		AddTouchMode( TouchObj.e_Mode.DTAP );
+		SetTouchMode( TouchParam.e_Type.TAP, true );
+		SetTouchMode( TouchParam.e_Type.DTAP, true );
 	}
 	
 	protected override void Init( bool _bMode )
@@ -68,7 +68,6 @@ public class BatterTouch : TouchObj
 	protected override void OnTap()
 	{
 		Swing();
-		m_Touch.m_ePhase = e_TouchPhase.HANDLE;
 	}
 
 	public void Stand()

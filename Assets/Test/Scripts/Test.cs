@@ -73,16 +73,16 @@ public class Test : BaseObj
 		switch( m_tGameMode.m_eMode ) {
 		case e_GameMode.GYRO:
 			m_Cursor.SendMessage( "SetGyroMode", GyroObj.e_Mode.ROTATION );
-			m_Cursor.SendMessage( "SetTouchMode", TouchObj.e_Mode.NONE );
+			m_Cursor.SendMessage( "SetTouchMode", TouchParam.e_Type.NONE );
 			break;
 		case e_GameMode.TAPPOS:
 			m_Cursor.SendMessage( "SetGyroMode", GyroObj.e_Mode.NONE );
-			m_Cursor.SendMessage( "SetTouchMode", TouchObj.e_Mode.TAP );
+			m_Cursor.SendMessage( "SetTouchMode", TouchParam.e_Type.TAP );
 			break;
 		default:
 			m_tGameMode.m_eMode = e_GameMode.GYRO;
 			m_Cursor.SendMessage( "SetGyroMode", GyroObj.e_Mode.NONE );
-			m_Cursor.SendMessage( "SetTouchMode", TouchObj.e_Mode.NONE );
+			m_Cursor.SendMessage( "SetTouchMode", TouchParam.e_Type.NONE );
 			break;
 		}
 		m_tGameMode.m_bChg = false;

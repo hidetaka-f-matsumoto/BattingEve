@@ -6,7 +6,6 @@ public class GyroWatcher : BaseObj
 	public ParamGyro		m_GyParams;
 	bool					m_bTest;
 
-	// Use this for initialization
 	void Start()
 	{
 		Input.gyro.enabled = true;
@@ -14,7 +13,6 @@ public class GyroWatcher : BaseObj
 		m_bTest = false;
 	}
 
-	// Update is called once per frame
 	void Update()
 	{
 		if( m_bTest )

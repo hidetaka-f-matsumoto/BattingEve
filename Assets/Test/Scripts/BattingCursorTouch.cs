@@ -5,7 +5,9 @@ public class BattingCursorTouch : TouchObj
 {
 	protected override void OnTap()
 	{
-		gameObject.transform.position = ConvScreenPos2ObjPos( m_Touch.m_vParam1 );
-		m_Touch.m_ePhase = TouchObj.e_TouchPhase.HANDLE;
+		Vector2 vTapPos = new Vector2(0.0f,0.0f);
+		Vector2 vDummy = new Vector2(0.0f,0.0f);
+		m_TchScript.m_TchParam.Get( TouchParam.e_Type.TAP, ref vTapPos, ref vDummy );
+		gameObject.transform.position = ConvScreenPos2ObjPos( vTapPos );
 	}
 }

@@ -14,19 +14,16 @@ public class GyroObj : BaseObj
 	protected GyroWatcher	m_GyScript;
 	protected e_Mode		m_eMode;
 
-	// Use this for initialization
 	protected virtual void Start()
 	{
 		m_eMode = e_Mode.NONE;
 	}
 	
-	// OnEnable is called when the object becomes enabled and active
-	protected virtual void OnEnable()
+	protected virtual void Awake()
 	{
 		m_GyScript = m_GyWatcher.GetComponent<GyroWatcher>();
 	}
 
-	// Update is called once per frame
 	protected virtual void Update()
 	{
 		if( e_Mode.NONE != (e_Mode.ACCELERATION & m_eMode) )
